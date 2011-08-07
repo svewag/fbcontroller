@@ -1,0 +1,4 @@
+Usage:
+new social.facebook(<API-KEY>, <callback>);
+s2.facebook.instance.<method>()
+
