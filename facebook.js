@@ -139,7 +139,7 @@
 		};
 
 		self.getLoggedInUser = function(cb){
-			self.callAPI("/me", cb);
+			self.callGraphAPI("/me", cb);
 		};
 
 		self.getLikes = function(cb){
