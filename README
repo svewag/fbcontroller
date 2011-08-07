@@ -2,3 +2,29 @@ Usage:
 new social.facebook(<API-KEY>, <callback>);
 s2.facebook.instance.<method>()
 
+Members:
+uid => User ID des Facebook Users
+token => app access token
+
+Methods:
+isAuthorized => check if the facebook user is logged in and has accepted the needed app permissions
+
+getUser => try to load the user and save it internally, no return value
+
+revokeAuth([returnURL], [callback]) => revoke the app authentication and load if given the returnURL
+
+requestPermission(permissions, [granted-callback], [denied-callback]) => asks the user for the permissions, permissions is a comma separated list of permissions (https://developers.facebook.com/docs/reference/api/permissions/)
+
+logout => logs out the current user
+
+share(options, callback) => open the share dialog, options contains 'headline', 'link', 'imageURL', 'caption' and 'desc'. 'link' is mandatory
+
+fqlQuery(query, callback) => evaluate a fql query, the result is returned in the callback
+
+getFriends(callback) => get the friends id and name of the current user, the result is returned in the callback
+
+getLoggedInUser(callback) => get information about the current user via the open graph, the result is returned in the callback
+
+getLikes => get the Likes of the current user via the open graph, the result is returned in the callback
+
+callGraphAPI(path, callback) => query a facebook open graph path, the result is returned in the callback
