@@ -1,6 +1,10 @@
 Usage:
-new social.facebook(<API-KEY>, <callback>);
-s2.facebook.instance.<method>()
+<script type="text/javascript" src="https://connect.facebook.net/[en_US|de_DE]/all.js"></script>
+<script type="text/javascript" src="facebook.js"></script>
+<script type="text/javascript">
+   new social.facebook(<APP-API-KEY>, <CALLBACK>);
+   social.facebook.instance.<METHOD()
+</script>
 
 Members:
 uid => User ID des Facebook Users
