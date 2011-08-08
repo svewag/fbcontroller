@@ -7,13 +7,13 @@
 		var self = this;
 		FacebookController.initialized = false;
 
-		if(self.instance){
+		if(this.instance){
 			return FacebookController.instance;
 		}
 
-		self.uid = null;
+		this.uid = null;
 		
-		self.init = function(cb){
+		this.init = function(cb){
 			cb = cb || function(r){ console.log(r); }
 			if(FacebookController.initialized){ return }
 
@@ -40,9 +40,9 @@
 				FB.Canvas.setSize();
 			}
 
-			self.getUser(function(uid){
+			this.getUser(function(uid){
 				var info = {
-					isAuthorized: self.isAuthorized()
+					isAuthorized: this.isAuthorized()
 				};
 				cb(info);
 			});
@@ -50,13 +50,13 @@
 			FacebookController.initialized = true;
 		};
 
-		self.isAuthorized = function(){
-			return self.uid != null;
+		this.isAuthorized = function(){
+			return this.uid != null;
 		};
 
-		self.getUser = function(cb){
+		this.getUser = function(cb){
 			cb = cb || function(r){ console.log(r); }
-			if(self.isAuthorized()){ return cb(self.uid); }
+			if(this.isAuthorized()){ return cb(this.uid); }
 
 			FB.getLoginStatus(function(resp){
 				console.log(resp);
@@ -64,11 +64,11 @@
 					self.uid = resp.authResponse.userID;
 					self.token = resp.authResponse.accessToken;
 				}
-				cb(self.uid);
+				cb(this.uid);
 			});
 		};
 
-		self.revokeAuth = function(returnURL, cb){
+		this.revokeAuth = function(returnURL, cb){
 			FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
           			self.uid = null;
 				self.token = null;
@@ -77,7 +77,7 @@
         		});
 		};
 
-		self.requestPermission = function(perm, granted, denied){
+		this.requestPermission = function(perm, granted, denied){
 			perm = perm || '';
 			granted = granted || function(){};
 			denied = denied || function(){};
@@ -94,13 +94,13 @@
 			}, {scope: perm});
 		};
 
-		self.logout = function(cb){
+		this.logout = function(cb){
 			FB.logout(function(){
 				if(typeof cb === "function"){ cb(); }
 			});
 		};
 
-		self.share = function(opt, cb){
+		this.share = function(opt, cb){
 			opt = opt || {};
 			cb = cb || function(r){ console.log(r); }
 			
@@ -124,38 +124,38 @@
    			});
 		};
 
-		self.fqlQuery = function(queryString, cb){
+		this.fqlQuery = function(queryString, cb){
 			cb = cb || function(r){ console.log(r); }
 			var query = FB.Data.query(queryString);
 			query.wait(cb);
 		};
 
-		self.getFriends = function(cb){
+		this.getFriends = function(cb){
 			cb = cb || function(r){ console.log(r); }
-			if(self.uid === null){ console.log("missing uid when looking for friends."); }
-			self.fqlQuery("select name, uid from user where uid in(select uid1 from friend where uid2="+self.uid+")", function(rows){
+			if(this.uid === null){ console.log("missing uid when looking for friends."); }
+			this.fqlQuery("select name, uid from user where uid in(select uid1 from friend where uid2="+this.uid+")", function(rows){
 				typeof cb === "function" && cb(rows);
 			});
 		};
 
-		self.getLoggedInUser = function(cb){
-			self.callGraphAPI("/me", cb);
+		this.getLoggedInUser = function(cb){
+			this.callGraphAPI("/me", cb);
 		};
 
-		self.getLikes = function(cb){
-			self.callGraphAPI("/me/likes", cb);
+		this.getLikes = function(cb){
+			this.callGraphAPI("/me/likes", cb);
 		};
 
-		self.callGraphAPI = function(path, cb){
+		this.callGraphAPI = function(path, cb){
 			cb = cb || function(r){ console.log(r); }
-			path = path + "?access_token="+self.token;
+			path = path + "?access_token="+this.token;
 			console.log(path);
 			FB.api(path, cb);
 		};
 
-		self.init(cb);
+		this.init(cb);
 
-		FacebookController.instance = self;
+		FacebookController.instance = this;
 	};
 	
 	if(!win["social"]){
